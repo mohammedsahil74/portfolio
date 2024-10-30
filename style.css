@@ -34,7 +34,7 @@ ul li{
     color: black;
     
 }
-.box{
+#box{
     display: flex;
     position: absolute;
     height: 300px;
@@ -44,14 +44,52 @@ ul li{
     border-radius: 25px;
     background-color: black;
 }
-.box-1{
+#box-1{
     display: flex;
     position: absolute;
-    transform: translate(-50,-50);
+    left: 300px;
     height: 300px;
     width: 250px;
     margin-left: 20px;
     margin-top: 20px;
     border-radius: 25px;
     background-color: black;
+}
+#box-2{
+    display: flex;
+    position: absolute;
+    left: 600px;
+    height: 300px;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 25px;
+    background-color: black;
+}
+#box-3{
+    display: flex;
+    position: absolute;
+    left: 900px;
+    height: 300px;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 25px;
+    background-color: black;
+}
+#box-4{
+    display: flex;
+    position: absolute;
+    left: 1200px;
+    height: 300px;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 25px;
+    background-color: black;
+}
+#img-1{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
