@@ -3,7 +3,7 @@
     --bg-dark-grey: #111111;
     --text-white: #EAEAEA;
     --text-black: #000000;
-    --accent-red: #D71921; /* Nothing's signature red */
+    --accent-red: #D71921; 
     
     --font-dot: 'DotGothic16', sans-serif;
     --font-mono: 'Space Mono', monospace;
@@ -20,7 +20,7 @@ body {
     color: var(--text-white);
     font-family: var(--font-mono);
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -62,7 +62,6 @@ nav {
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
-    /* Prevent overflow on desktop */
     min-height: 0; 
 }
 
@@ -82,15 +81,15 @@ nav {
     border: 1px solid #333;
 }
 
-/* --- 1. Intro Card (High Contrast White) --- */
+
 .intro-card {
-    flex: 1.5; /* Takes up 60% of vertical space */
+    flex: 1.5; 
     background-color: var(--text-white);
     color: var(--bg-black);
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Pins Header top, Button bottom */
+    justify-content: space-between; 
     position: relative;
 }
 
@@ -114,7 +113,7 @@ nav {
 
 .intro-content h1 {
     font-family: var(--font-dot);
-    /* Dynamic font size: shrinks on mobile, grows on desktop */
+    
     font-size: clamp(2.5rem, 5vw, 4.5rem); 
     line-height: 0.9;
     text-transform: uppercase;
@@ -128,10 +127,15 @@ nav {
     margin-bottom: auto; /* Push content down */
     color: #444;
     padding-top: 10px;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .tech-stack-mini {
     margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .tech-stack-mini span {
@@ -141,7 +145,6 @@ nav {
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: 700;
-    margin-right: 8px;
     text-transform: uppercase;
 }
 
@@ -162,7 +165,7 @@ nav {
 .social-row {
     display: flex;
     gap: 20px;
-    flex: 1; /* Takes up 40% of vertical space */
+    flex: 1; 
 }
 
 .social-card {
@@ -194,10 +197,15 @@ nav {
     color: #888;
 }
 
-.dot-icon {
-    font-family: var(--font-dot);
+.social-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--text-white);
+    transition: color 0.3s ease;
+}
+
+.social-card:hover .social-icon {
     color: var(--accent-red);
-    font-size: 1.5rem;
 }
 
 .card-header {
@@ -205,19 +213,20 @@ nav {
     justify-content: space-between;
 }
 
-/* --- 3. Image Card (Grayscale) --- */
 .image-card {
     grid-column: 2 / 3;
     background-color: #111;
     position: relative;
-    /* On desktop, height is handled by grid */
-    height: auto; 
+    height: 100%;
 }
 
 .profile-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    display: block;
+    
     filter: grayscale(100%) contrast(1.1);
     transition: filter 0.5s;
 }
@@ -252,40 +261,41 @@ nav {
     color: var(--text-white);
 }
 
-/* --- MOBILE RESPONSIVE FIXES --- */
 
-/* Tablet & Mobile (Below 900px) */
 @media (max-width: 900px) {
     body {
-        height: auto; /* Allow body to grow with content */
-        display: block; /* Remove flex column constraint */
-        overflow-y: auto; /* Enable scrolling */
+        height: auto; 
+        display: block; 
+        overflow-y: auto; 
     }
     
     .bento-wrapper {
         display: flex;
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: column; 
         height: auto;
     }
 
     .left-column {
         height: auto;
+        gap: 20px;
     }
 
-    /* Intro card needs to be tall enough for text */
     .intro-card {
         min-height: 400px; 
     }
 
-    /* Keep social row side-by-side on tablet, but give it height */
     .social-row {
         min-height: 200px;
     }
 
-    /* Give image a fixed height since it's no longer in a grid row */
     .image-card {
-        height: 400px; 
         width: 100%;
+        height: auto; 
+    }
+    
+    .profile-img {
+        height: auto;
+        object-fit: contain;
     }
 }
 
@@ -293,24 +303,23 @@ nav {
 @media (max-width: 480px) {
     .intro-card {
         padding: 20px;
-        min-height: 450px; /* More height for text wrapping */
+        min-height: 450px; 
     }
 
     .intro-content h1 {
-        font-size: 2.5rem; /* Force smaller font on small screens */
+        font-size: 2.5rem; 
     }
 
-    /* Stack the social buttons vertically on small phones */
     .social-row {
         flex-direction: column;
         height: auto;
     }
 
     .social-card {
-        min-height: 150px; /* Height for each stacked box */
+        min-height: 150px; 
     }
     
     .image-card {
-        height: 350px;
+        height: auto;
     }
 }
