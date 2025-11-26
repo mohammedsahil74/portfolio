@@ -20,9 +20,11 @@ body {
     color: var(--text-white);
     font-family: var(--font-mono);
     padding: 20px;
+    height: auto; 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 /* --- Navigation --- */
@@ -58,11 +60,9 @@ nav {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
     gap: 20px;
-    flex-grow: 1;
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
-    min-height: 0; 
 }
 
 .left-column {
@@ -261,6 +261,204 @@ nav {
     color: var(--text-white);
 }
 
+/* =========================================
+   PROJECTS SECTION STYLES
+   ========================================= */
+
+.section-header {
+    max-width: 1600px;
+    margin: 40px auto 20px auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-header h2 {
+    font-family: var(--font-dot);
+    color: #444;
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+.section-header .line {
+    height: 1px;
+    background: #333;
+    width: 100%;
+    border-bottom: 1px dashed #333;
+}
+
+/* Projects Grid */
+.projects-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 40px auto;
+}
+
+/* Project Card Styling */
+.project-card {
+    background-color: var(--bg-dark-grey);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+    border: 1px solid #333;
+}
+
+.project-card:hover {
+    border-color: var(--text-white);
+    background-color: #000;
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.folder-icon {
+    color: #444;
+    transition: color 0.3s;
+}
+
+.project-card:hover .folder-icon {
+    color: var(--accent-red);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-red);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-red);
+}
+
+.project-content h3 {
+    font-family: var(--font-dot);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.project-content p {
+    font-family: var(--font-mono);
+    color: #888;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    height: 60px; 
+    overflow: hidden;
+}
+
+
+.project-card .tech-stack-mini span {
+    border-color: #333;
+    color: #888;
+    font-size: 0.7rem;
+}
+
+.project-footer {
+    border-top: 1px dashed #333;
+    padding-top: 15px;
+    margin-top: auto;
+}
+
+.link-arrow {
+    font-family: var(--font-dot);
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: margin-left 0.3s ease, color 0.3s;
+}
+
+.project-card:hover .link-arrow {
+    color: var(--accent-red);
+    margin-left: 10px;
+}
+
+/* =========================================
+   ARTICLES SECTION STYLES
+   ========================================= */
+
+.articles-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 60px auto; 
+}
+
+.article-card {
+    background-color: #0A0A0A;
+    padding: 30px;
+    border: 1px solid #333;
+    text-decoration: none; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    min-height: 200px;
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    border-color: var(--accent-red);
+    background-color: #111;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #AAA; 
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #222;
+    padding-bottom: 15px;
+}
+
+.article-meta .tag {
+    color: var(--accent-red);
+    font-weight: bold;
+}
+
+.article-content h3 {
+    font-family: var(--font-dot);
+    color: var(--text-white);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.article-content p {
+    font-family: var(--font-mono);
+    color: var(--text-white); 
+    font-size: 0.85rem;
+    max-width: 85%;
+}
+
+.article-icon {
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    color: #444;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.article-card:hover .article-icon {
+    color: var(--text-white);
+    transform: rotate(-10deg) scale(1.1);
+}
+
+/* =========================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================= */
 
 @media (max-width: 900px) {
     body {
@@ -269,57 +467,34 @@ nav {
         overflow-y: auto; 
     }
     
+    /* Hero Adjustments */
     .bento-wrapper {
         display: flex;
         flex-direction: column; 
         height: auto;
     }
+    .left-column { height: auto; gap: 20px; }
+    .intro-card { min-height: 400px; }
+    .social-row { min-height: 200px; }
+    .image-card { width: 100%; height: auto; }
+    .profile-img { height: auto; object-fit: contain; }
 
-    .left-column {
-        height: auto;
-        gap: 20px;
-    }
+    /* Projects Mobile */
+    .projects-wrapper { grid-template-columns: 1fr; }
+    .project-card { min-height: auto; }
+    .project-content p { height: auto; }
 
-    .intro-card {
-        min-height: 400px; 
-    }
-
-    .social-row {
-        min-height: 200px;
-    }
-
-    .image-card {
-        width: 100%;
-        height: auto; 
-    }
-    
-    .profile-img {
-        height: auto;
-        object-fit: contain;
-    }
+    /* Articles Mobile */
+    .articles-wrapper { grid-template-columns: 1fr; }
+    .article-card { min-height: auto; }
+    .article-content p { max-width: 100%; }
+    .article-icon { display: none; }
 }
 
-/* Small Mobile (Below 480px) */
 @media (max-width: 480px) {
-    .intro-card {
-        padding: 20px;
-        min-height: 450px; 
-    }
-
-    .intro-content h1 {
-        font-size: 2.5rem; 
-    }
-
-    .social-row {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .social-card {
-        min-height: 150px; 
-    }
-    
-    .image-card {
-        height: auto;
-    }
+    .intro-card { padding: 20px; min-height: 450px; }
+    .intro-content h1 { font-size: 2.5rem; }
+    .social-row { flex-direction: column; height: auto; }
+    .social-card { min-height: 150px; }
+    .image-card { height: auto; }
 }
