@@ -441,6 +441,11 @@ nav {
     color: var(--text-white); 
     font-size: 0.85rem;
     max-width: 85%;
+    /* Handle long descriptions */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .article-icon {
@@ -454,6 +459,20 @@ nav {
 .article-card:hover .article-icon {
     color: var(--text-white);
     transform: rotate(-10deg) scale(1.1);
+}
+
+/* New Loading Text Style */
+.loading-text {
+    font-family: var(--font-mono);
+    color: #666;
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
 }
 
 /* =========================================
