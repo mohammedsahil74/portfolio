@@ -12,6 +12,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+   
+    const commitList = document.getElementById('commit-list');
+    
+    const githubUsername = 'mohammedsahil74';
+
+    if (commitList) {
+        
+
+        fetch(`https://api.github.com/users/${mohammedsahil74}/events`)
+            .then(response => {
+                
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        throw new Error("API Rate Limit Exceeded. Try again in an hour.");
+                    }
+                    throw new Error(`GitHub API Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                
+                if (!Array.isArray(data)) {
+                    throw new Error("Received invalid data from GitHub.");
+                }
+
+                commitList.innerHTML = ''; 
+                
+                
+                const pushEvents = data.filter(event => event.type === 'PushEvent');
+                
+                if (pushEvents.length === 0) {
+                    commitList.innerHTML = '<div style="color:#666; padding:10px;">> No recent public commits found.</div>';
+                    return;
+                }
+
+                
+                const recentPushes = pushEvents.slice(0, 10);
+
+                recentPushes.forEach(event => {
+                    
+                    const repoName = event.repo.name.split('/')[1] || event.repo.name;
+                    
+                    // Format date
+                    const dateObj = new Date(event.created_at);
+                    const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    
+                    const commits = event.payload.commits;
+                    if (commits && commits.length > 0) {
+                        const commitMsg = commits[commits.length - 1].message;
+                        
+                        const row = document.createElement('div');
+                        row.className = 'commit-row';
+                        row.innerHTML = `
+                            <span class="commit-prefix">></span>
+                            <span class="commit-repo">${repoName}</span>
+                            <span class="commit-msg">${commitMsg}</span>
+                            <span class="commit-date">[${dateStr}]</span>
+                        `;
+                        commitList.appendChild(row);
+                    }
+                });
+            })
+            .catch(err => {
+                console.error("GitHub Fetch Error:", err);
+               
+                commitList.innerHTML = `<div style="color:#ff5f56; padding:10px;">> ERROR: ${err.message}</div>`;
+            });
+    }
+
     // 2. Blog Integration (Dev.to)
     const blogGrid = document.getElementById('blog-grid');
     
@@ -39,9 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Format date
                     const dateStr = new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-                    // NEW: Check for cover image
-                    // If no cover image, we can use a fallback or just not show it.
-                    // Using a conditional string here.
+                    
                     const coverImageHTML = article.cover_image 
                         ? `<div class="article-cover-wrapper"><img src="${article.cover_image}" alt="${article.title}" class="article-cover"></div>` 
                         : '';
