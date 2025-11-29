@@ -262,22 +262,112 @@ nav {
 }
 
 /* =========================================
-   PROJECTS SECTION STYLES
+   GITHUB TERMINAL STYLES
    ========================================= */
 
-.section-header {
-    max-width: 1600px;
-    margin: 40px auto 20px auto;
+.github-wrapper {
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+    max-width: 1600px;
+    margin: 0 auto 40px auto;
+    background-color: #0A0A0A;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: var(--font-mono);
 }
 
-.section-header h2 {
-    font-family: var(--font-dot);
-    color: #444;
-    font-size: 1.5rem;
+.terminal-header {
+    background-color: #1a1a1a;
+    padding: 10px 15px;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: block;
+}
+
+.terminal-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.terminal-body {
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    /* Custom Scrollbar for Terminal */
+    scrollbar-width: thin;
+    scrollbar-color: #333 #0A0A0A;
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+.terminal-body::-webkit-scrollbar-track {
+    background: #0A0A0A;
+}
+.terminal-body::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 4px;
+}
+
+/* Individual Commit Row */
+.commit-row {
+    display: flex;
+    flex-wrap: wrap; /* Wrap on small screens */
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #222;
+    color: #AAA;
+    font-size: 0.85rem;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.commit-row:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-white);
+}
+
+.commit-prefix {
+    color: var(--accent-red);
+    font-weight: bold;
+}
+
+.commit-repo {
+    color: #FFF;
+    font-weight: 700;
+    background: #222;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.commit-msg {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.commit-date {
+    color: #555;
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
