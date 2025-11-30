@@ -1,15 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Hover Effects for all cards
+    // 1. Hover Effects for all cards with glitch effect
     const cards = document.querySelectorAll('.card');
 
     cards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             card.style.transform = 'translateY(-5px)';
+            // Add subtle glitch effect
+            card.classList.add('glitch-hover');
+            setTimeout(() => card.classList.remove('glitch-hover'), 200);
         });
 
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'translateY(0)';
         });
+    });
+
+    // 2. Scroll reveal animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe sections for scroll reveal
+    document.querySelectorAll('.section-header, .projects-wrapper, .articles-wrapper, .github-wrapper').forEach(el => {
+        observer.observe(el);
     });
 
 
@@ -50,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const recentPushes = pushEvents.slice(0, 10);
 
-                recentPushes.forEach(event => {
+                recentPushes.forEach((event, index) => {
 
                     const repoName = event.repo.name.split('/')[1] || event.repo.name;
 
@@ -65,13 +88,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         const row = document.createElement('div');
                         row.className = 'commit-row';
+                        row.style.opacity = '0';
                         row.innerHTML = `
                             <span class="commit-prefix">></span>
                             <span class="commit-repo">${repoName}</span>
-                            <span class="commit-msg">${commitMsg}</span>
+                            <span class="commit-msg" data-text="${commitMsg}"></span>
                             <span class="commit-date">[${dateStr}]</span>
                         `;
                         commitList.appendChild(row);
+
+                        // Typewriter effect for commit messages
+                        setTimeout(() => {
+                            row.style.transition = 'opacity 0.3s';
+                            row.style.opacity = '1';
+                            const msgElement = row.querySelector('.commit-msg');
+                            typeWriter(msgElement, commitMsg, 30, index * 100);
+                        }, index * 150);
                     }
                 });
             })
@@ -138,6 +170,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error fetching blog:', error);
                 blogGrid.innerHTML = '<div class="loading-text" style="color:red">// ERR: API_FAIL</div>';
             });
+    }
+
+    // 3. Typewriter effect function
+    function typeWriter(element, text, speed, delay) {
+        setTimeout(() => {
+            let i = 0;
+            element.textContent = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        }, delay);
+    }
+
+    // 4. Add blinking cursor to terminal
+    const terminalBody = document.getElementById('commit-list');
+    if (terminalBody) {
+        const cursor = document.createElement('div');
+        cursor.className = 'terminal-cursor';
+        cursor.textContent = '_';
+        terminalBody.appendChild(cursor);
+
+        // Hide cursor when commits are loaded
+        setTimeout(() => {
+            if (terminalBody.querySelectorAll('.commit-row').length > 0) {
+                cursor.style.display = 'none';
+            }
+        }, 3000);
+    }
+
+    // 5. Animated background grid pattern
+    createAnimatedGrid();
+
+    function createAnimatedGrid() {
+        const grid = document.createElement('div');
+        grid.className = 'animated-grid';
+        document.body.appendChild(grid);
     }
 
     console.log("Portfolio loaded. System Online.");
